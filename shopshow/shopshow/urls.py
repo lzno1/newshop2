@@ -17,7 +17,7 @@ from django.conf import settings
 # from django.conf.urls.static import static
 from django.contrib import admin
 from django.views import static
-from django.conf.urls import url
+# from django.conf.urls import url
 from django.urls import re_path
 from django.urls import path
 from contact.views import contact
@@ -50,7 +50,7 @@ urlpatterns = [
     path('addToolUpdateShowgoods/<info>/', UpdateShowgoodsTool, name='getJsonByGoodsData'),
     path('addToolUpdateAllGoods/<info>/', UpdateAllGoodsTool, name='getJsonByGoodsData'),
     path('downloadDataMysqlbd/', downsq, name='downsq'),
-    url(r'^static/(?P<path>.*)$', static.serve,
+    re_path(r'^static/(?P<path>.*)$', static.serve,
       {'document_root': settings.STATIC_ROOT}, name='static'),
     re_path(r'^media/(?P<path>.*)$',static.serve,{'document_root':settings.MEDIA_ROOT}),
 
