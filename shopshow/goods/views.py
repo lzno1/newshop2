@@ -636,15 +636,23 @@ def goodInfo(request):
     if request.method == "GET" and request.GET:
         id = request.GET.get('goodid', None)
         goodinfo = AllGoods.objects.filter(Product_Number = id).first()
-        good_color = goodinfo.Product_Color
-        colors = good_color.split(',')
-        color_string = ''
-        for color in colors:
-            color_string +=  color.split('=')[1] + ', '
-        goodinfo.Product_Color = color_string
-
-        material = goodinfo.Material.split('=')[1]
-        goodinfo.Material = material
+        try:
+            good_color = goodinfo.Product_Color
+            colors = good_color.split(',')
+            color_string = ''
+            for color in colors:
+                color_string +=  color.split('=')[1] + ', '
+            goodinfo.Product_Color = color_string[:-2]
+        except:
+            goodinfo.Product_Color = 'none'
+        try:
+            maters = goodinfo.Material.split(',')
+            new_material = ''
+            for onem in maters:
+                new_material += onem.split('=')[1] + ', '
+            goodinfo.Material = new_material[:-2]
+        except:
+            goodinfo.Material = 'none'
 
         goodinfo.Rush_Time = goodinfo.Rush_Time.replace(':', '').replace('：','')
         
